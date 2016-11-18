@@ -1,0 +1,28 @@
+{
+  "name": "react-native-chart-web",
+  "version": "0.0.1",
+  "description": "JavaScript implementation of a view container that can flip between its front and back, where the back has a console.log and the front is your aplication.",
+  "main": "react-native-ChartView.js",
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TradingPal/react-debbuger"
+  },
+  "keywords": [
+    "react-native",
+    "react-component",
+    "ios",
+    "android",
+    "WebView",
+    "HighCharts"
+  ],
+  "author": "Infinity0106",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TradingPal/react-debbuger/issues"
+  },
+  "homepage": "https://github.com/TradingPal/react-debbuger#readme"
+}
