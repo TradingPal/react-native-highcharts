@@ -1,5 +1,5 @@
 {
-  "name": "react-native-chart-web",
+  "name": "react-native-chart-view",
   "version": "0.0.1",
   "description": "JavaScript implementation of a view container that can flip between its front and back, where the back has a console.log and the front is your aplication.",
   "main": "react-native-ChartView.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TradingPal/react-debbuger"
+    "url": "https://github.com/Infinity0106/react-native-chart-view"
   },
   "keywords": [
     "react-native",
@@ -22,7 +22,7 @@
   "author": "Infinity0106",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TradingPal/react-debbuger/issues"
+    "url": "https://github.com/Infinity0106/react-native-chart-view/issues"
   },
-  "homepage": "https://github.com/TradingPal/react-debbuger#readme"
+  "homepage": "https://github.com/Infinity0106/react-native-chart-view#readme"
 }
