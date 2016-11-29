@@ -1,0 +1,169 @@
+<html>
+<style media="screen" type="text/css">
+@import 'https://code.highcharts.com/css/highcharts.css';
+
+.highcharts-background{
+    fill: #f4f4f4;
+}
+.highcharts-candlestick-series .highcharts-point {
+    stroke: #7a7a7a;
+    fill: #7a7a7a;
+}
+.highcharts-candlestick-series .highcharts-point-up {
+    stroke: #f7676c;
+    fill: #f7676c;
+}
+.highcharts-yaxis-grid .highcharts-grid-line{
+    stroke: #f6979a;
+    stroke-dasharray: 5;
+}
+.highcharts-annotation path{
+    stroke: #7a7a7a;
+    fill: #7a7a7a
+}
+#container {
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  position:absolute;
+}
+</style>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "------------------------",
+    authDomain: "------------------------",
+    databaseURL: "-------------------------",
+    storageBucket: "---------------------------",
+    messagingSenderId: "-----------"
+  };
+  firebase.initializeApp(config);
+</script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="touches.js"></script>
+  <script src="https://code.highcharts.com/stock/highstock.js"></script>
+  <script src="annotation.js"></script>
+  <script>
+  //getjson
+  $(function () {
+    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?a=e&filename=aapl-ohlc.json&callback=?', function (data) {
+      
+        var chart = new Highcharts.stockChart({
+            accessibility: {
+                keyboardNavigation:{
+                    enabled: false
+                }
+            },
+            chart: {
+                renderTo: 'container',
+                backgroundColor: '#f4f4f4',
+                events: {
+                    load: chartLoad,
+                },
+                resetZoomButton: {
+                    theme: {
+                        display: 'none'
+                    }
+                }
+            },
+            annotationsOptions: {
+              enabledButtons:true,
+              buttons:{
+                annotation:{
+                  events:{
+                    mouseup:{
+
+                    }
+                  }
+                }
+              }
+            },
+            xAxis:{
+
+            },
+            yAxis: {
+                opposite: false,
+            },
+            title: {
+                text: '',
+            },
+            credits: {
+                enabled: false
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            tooltip: {
+                enabled: false
+            },
+            navigator: {
+                enabled: false
+            },
+            rangeSelector: {
+                selected: 1
+            },
+            scrollbar: {
+                enabled: false
+            },
+            series: [{
+                type: 'candlestick',
+                name: 'AAPL Stock Price',
+                data: data,
+                dataGrouping: {
+                    units: [
+                        [
+                            'week', // unit name
+                            [1] // allowed multiples
+                        ], [
+                            'month',
+                            [1, 2, 3, 4, 6]
+                        ]
+                    ]
+                }
+            }]
+        });
+        function chartLoad(){
+            var chart = this;
+            function del(e,annotation){
+                console.log(e);
+                console.log(annotation);
+                console.log(chart.selectedAnnotation);
+                console.log(JSON.stringify(chart.options.annotations));
+            }
+            var annotations = chart.annotations;
+            console.log(annotations);
+            Highcharts.addEvent(container, 'dblclick', del);
+        }
+
+        $(document).ready(function(){
+          var db = firebase.database();
+          if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            $(".highcharts-range-selector-buttons").css("display","none");
+            $(".highcharts-input-group").css("display","none");
+            $(".highcharts-button").css("display","none");
+          }
+          else{
+            db.ref("annotations").on('value',function(snapshot){
+              snapshot.forEach(function(val){
+                $("#container").highcharts().addAnnotation(val.val());
+              });
+            });
+          }
+        });
+    });
+});
+  </script>
+</head>
+  <body>
+    <div id="container">
+    </div>
+  </body>
+</html>

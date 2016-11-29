@@ -1,0 +1,115 @@
+`<html>
+<style media="screen" type="text/css">
+#container {
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  position:absolute;
+}
+</style>
+<head>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script>
+  $(function () {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'areaspline',
+            backgroundColor: '#FAFAFA',
+            events: {
+                selection: function(event) {
+                    var chart = this.yAxis[0];
+                    chart.removePlotLine('plot-line-1');
+                    chart.addPlotLine({
+                        value: event.yAxis[0].value,
+                        color: '#FF0000',
+                        width: 2,
+                        id: 'plot-line-1'
+                    });
+                    console.log(event);
+                }
+            },
+        },
+        title: {
+            text: '',
+        },
+        credits: {
+          enabled: false
+        },
+        xAxis: {
+            allowDecimals: false,
+            minorGridLineWidth: 0,
+            labels: {
+                formatter: function () {
+                    return this.value; // clean, unformatted number for year
+                }
+            },
+            crosshair: {
+              color: '#f7676c',
+              dashStyle: 'LongDash',
+              width: 2,
+              zIndex: 3,
+            }
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            gridLineColor: 'transparent',
+            labels: {
+                formatter: function () {
+                    return this.value / 1000 + 'k';
+                }
+            }
+        },
+        legend: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        },
+        tooltip: {
+            enabled: false
+        },
+        plotOptions: {
+            areaspline: {
+              marker: {
+                enabled: false,
+                fillColor: 'white',
+                lineColor: '#f7676c',
+                radius: 6,
+                zIndex:4,
+              }
+            }
+        },
+        series: [{
+            name: 'USA',
+            color: '#f7676c',
+            fillColor: {
+                linearGradient: [0, 0, 0, 300],
+                stops: [
+                    [0, '#f7676c'],
+                    [1, '#FAFAFA'],
+                ]
+            },
+            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                26956, 27912, 28999, 28965, 23044, 25393, 27935, 30062, 32049,
+                33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
+                35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
+                21000, 20000, 19000, 18000, 18000, 17000, 16000, 16000, 16000]
+        }]
+    });
+  });
+  </script>
+</head>
+  <body>
+    <div id="container">
+    </div>
+  </body>
+</html>`

@@ -83,7 +83,7 @@ export default class chartWebView extends Component {
             }]
         };
     return (
-      <ChartView style={{height:300}} config={conf}></ChartView>
+      <ChartView style={{flex:1}}></ChartView>
     );
   }
 }
