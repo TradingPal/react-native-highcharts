@@ -1,4 +1,4 @@
-# React-Native-Chart-View
+# react-native-highchart
 
 this is a react native component that uses highchart where you send the configuration as a prop and the chart is created with a WebView
 
