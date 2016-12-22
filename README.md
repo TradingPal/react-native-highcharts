@@ -13,7 +13,7 @@ npm install react-native-highcharts --save
 **REMEMBER**  to declare the variable Highcharts='Highcharts'
 
 ```javascript
-import ChartView from 'react-native-chart-view';
+import ChartView from 'react-native-highcharts';
 ...
 render() {
     var Highcharts='Highcharts';
