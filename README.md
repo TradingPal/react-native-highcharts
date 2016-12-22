@@ -4,11 +4,11 @@ this is a react native component that uses highchart where you send the configur
 
 ## Install
 ```bat
-npm install react-native-chart-view --save
+npm install react-native-highcharts --save
 ```
 ## Demo
 ![](http://i.giphy.com/l3vRdWwXin1ooLCHS.gif)
- 
+
 ## Basic example
 **REMEMBER**  to declare the variable Highcharts='Highcharts'
 
