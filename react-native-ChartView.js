@@ -559,6 +559,7 @@ this.buttonOffset=0;this.isDirtyExporting&&this.destroyExport();if(b&&!1!==c.ena
 var styles = StyleSheet.create({
     full: {
         flex: 1,
+        backgroundColor:'transparent'
     }
 });
 
