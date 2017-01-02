@@ -1,19 +1,19 @@
-# React-Native-Chart-View
+# react-native-highchart
 
 this is a react native component that uses highchart where you send the configuration as a prop and the chart is created with a WebView
 
 ## Install
 ```bat
-npm install react-native-chart-view --save
+npm install react-native-highcharts --save
 ```
 ## Demo
 ![](http://i.giphy.com/l3vRdWwXin1ooLCHS.gif)
- 
+
 ## Basic example
 **REMEMBER**  to declare the variable Highcharts='Highcharts'
 
 ```javascript
-import ChartView from 'react-native-chart-view';
+import ChartView from 'react-native-highcharts';
 ...
 render() {
     var Highcharts='Highcharts';
