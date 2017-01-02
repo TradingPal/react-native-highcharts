@@ -1,59 +1,445 @@
 <html>
-<style media="screen" type="text/css">
-@import 'https://code.highcharts.com/css/highcharts.css';
-
-.highcharts-background{
-    fill: #f4f4f4;
-}
-.highcharts-candlestick-series .highcharts-point {
-    stroke: #7a7a7a;
-    fill: #7a7a7a;
-}
-.highcharts-candlestick-series .highcharts-point-up {
-    stroke: #f7676c;
-    fill: #f7676c;
-}
-.highcharts-yaxis-grid .highcharts-grid-line{
-    stroke: #f6979a;
-    stroke-dasharray: 5;
-}
-.highcharts-annotation path{
-    stroke: #7a7a7a;
-    fill: #7a7a7a
-}
-#container {
-  width:100%;
-  height:100%;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  position:absolute;
-}
-</style>
 <head>
-  <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "------------------------",
-    authDomain: "------------------------",
-    databaseURL: "-------------------------",
-    storageBucket: "---------------------------",
-    messagingSenderId: "-----------"
-  };
-  firebase.initializeApp(config);
-</script>
+  <style media="screen" type="text/css">
+  @import 'https://code.highcharts.com/css/highcharts.css';
+
+  .highcharts-background{
+      fill: #f4f4f4;
+  }
+  .highcharts-candlestick-series .highcharts-point {
+      stroke: #7a7a7a;
+      fill: #7a7a7a;
+  }
+  .highcharts-candlestick-series .highcharts-point-up {
+      stroke: #f7676c;
+      fill: #f7676c;
+  }
+  .highcharts-yaxis-grid .highcharts-grid-line{
+      stroke: #f6979a;
+      stroke-dasharray: 5;
+  }
+  .highcharts-navigator-series{
+    color:#f7676c;
+  }
+  #container {
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    position:absolute;
+  }
+  </style>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="touches.js"></script>
-  <script src="https://code.highcharts.com/stock/highstock.js"></script>
-  <script src="annotation.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
   <script>
-  //getjson
-  $(function () {
-    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?a=e&filename=aapl-ohlc.json&callback=?', function (data) {
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCxdDNHggTXKW8VtxLRF2uZxap5-3yFHAo",
+      authDomain: "chart-b1d65.firebaseapp.com",
+      databaseURL: "https://chart-b1d65.firebaseio.com",
+      storageBucket: "chart-b1d65.appspot.com",
+      messagingSenderId: "68693173535"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="https://code.highcharts.com/stock/highstock.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>  
+  <script src="annotation.js"></script>
+</head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-10" style="height: 100%; padding: 0">
+          <div id="container"></div>
+        </div>
+        <div id="side-menu" class="col-sm-2" style="height: 100%; position: relative; padding:0;overflow-y: auto;">
+
+          <div style="padding: 30px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Symbol</text>
+            <select id="symbol" class="selectpicker" data-width="100%">
+              <option value="AUDCAD">AUD/CAD</option> 
+              <option value="AUDCHF">AUD/CHF</option>
+              <option value="AUDJPY">AUD/JPY</option>
+              <option value="AUDNZD">AUD/NZD</option>
+              <option value="AUDUSD">AUD/USD</option>
+              <option value="CADJPY">CAD/JPY</option>
+              <option value="CHFJPY">CHF/JPY</option>
+              <option value="EURAUD">EUR/AUD</option>
+              <option value="EURCAD">EUR/CAD</option>
+              <option value="EURCHF">EUR/CHF</option>
+              <option value="EURGBP">EUR/GBP</option>
+              <option value="EURJPY">EUR/JPY</option>
+              <option value="EURNZD">EUR/NZD</option>
+              <option value="EURUSD">EUR/USD</option>
+              <option value="GBPAUD">GBP/AUD</option>
+              <option value="GBPCAD">GBP/CAD</option>
+              <option value="GBPCHF">GBP/CHF</option>
+              <option value="GBPJPY">GBP/JPY</option>
+              <option value="GBPNZD">GBP/NZD</option>
+              <option value="GBPUSD">GBP/USD</option>
+              <option value="NZDJPY">NZD/JPY</option>
+              <option value="NZDUSD">NZD/USD</option>
+              <option value="USDCAD">USD/CAD</option>
+              <option value="USDCHF">USD/CHF</option>
+              <option value="USDJPY">USD/JPY</option>
+              <option value="USDMXN">USD/MXN</option>
+            </select> 
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Period</text>
+            <select id="period" class="selectpicker" data-width="100%">
+              <option value="1">1 min</option>
+              <option value="5">5 min</option>
+              <option value="15">15 min</option>
+              <option value="30">30 min</option>
+              <option value="60">1 H</option> 
+              <option value="240">4 H</option>
+            </select> 
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Order Type</text>
+            <select id="order_type" class="selectpicker" data-width="100%">
+              <option value="buy">Buy</option>
+              <option value="sell">Sell</option>              
+            </select> 
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Price</text>
+            <input id='price' type="number" class="form-control" placeholder="Price" style="text-align:center;margin-top:5px">
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Stop Loss</text>
+            <input id="stop_loss_inp" type="number" class="form-control" placeholder="Stop Loss" style="text-align:center;margin-top:5px">
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Take Profit</text>
+            <input id="take_profit_inp" class="form-control" type="number" placeholder="Take Profit" style="text-align:center;margin-top:5px">
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Description</text>
+            <textarea id="description" class="form-control" rows="5"></textarea>
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Strategy</text>
+            <select id="strategy" class="selectpicker" data-width="100%">
+              <option>Fundamental</option>
+              <option>Análisis técnico</option>
+            </select> 
+          </div>
+
+          <div style="padding: 5px 25% 5px 25%;text-align:center">
+            <text style="width:100%">Characteristic</text>
+            <input id='characteristic' type="number" class="form-control" placeholder="Characteristic" style="text-align:center;margin-top:5px">
+          </div>
+
+          <div style="padding: 5px 25% 30px 25%;text-align:center">
+            <text style="width:100%">Market</text>
+            <select id="market" class="selectpicker" data-width="100%">
+              <option>Forex</option>
+              <option>-------</option>
+            </select> 
+          </div>
+
+          <div id="btn-enviar" style="position: absolute; bottom:0; background-color:#f7676c; width: 100%; text-align:center;padding: 20px 0; cursor:pointer; z-index:2">
+            <text style="color: white">ENVIAR</text>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    $(window).load(function(){
+      newChart($("#symbol").val(), $("#period").val());
+    });
+
+
+    function drawAnnotation(chart,type){
+      if(type=="stop loss"){
+        var color = "#7F0000";        
+        var input = "#stop_loss_inp";
+        if($("#order_type").val()=="sell"){
+          var value = chart.yAxis[0].dataMax;
+          $(input).val(chart.yAxis[0].dataMax);
+        }
+        else{
+          var value = chart.yAxis[0].dataMin;
+          $(input).val(chart.yAxis[0].dataMin);
+        }
+      }
+      if(type=="take profit"){
+        var color = "#66A366";
+        var input = "#take_profit_inp";
+        if($("#order_type").val()=="buy"){
+          var value = chart.yAxis[0].dataMax;
+          $(input).val(chart.yAxis[0].dataMax);
+        }
+        else{
+          var value = chart.yAxis[0].dataMin;
+          $(input).val(chart.yAxis[0].dataMin);
+        }        
+      }
+      chart.addAnnotation({
+          "xAxis":0,
+          "yAxis":0,
+          "shape":{
+            "params":{
+              "stroke":color,
+              "fill":"transparent",
+              "stroke-width":2,
+              "stroke-dasharray":20,
+              "d":["M",0,0,"L",chart.xAxis[0].dataMax-chart.xAxis[0].dataMin,0]
+            },
+            "type":"path"
+          },
+          "title":type,
+          "events":{
+            "mouseover": function(e){
+              //console.log('mouseover');
+            },
+            "mouseout": function(e){
+              $(input).val(this.options.yValue.toFixed(5));
+            },
+            "mousedown": function(e){
+              //console.log("mousedown");
+            },
+            "mouseup": function(e){
+              //console.log("moseup");
+            }
+          },
+          "selectionMarker":{
+            "stroke-width":1,
+            "stroke":"black",
+            "fill":"transparent",
+            "dashstyle":"ShortDash",
+            "shape-rendering":"crispEdges"
+          },
+          "anchorX":"left",
+          "anchorY":"top",
+          "xValue":chart.xAxis[0].dataMin,
+          "yValue": value,
+          "allowDragX":false,
+          "allowDragY":true,
+          "xValueEnd":chart.xAxis[0].dataMax,
+          "yValueEnd": value
+        });
+    }
+
+    //line for stop loss
+    $("#stop_loss_inp").click(function(){
+      var chart = $("#container").highcharts();
+      each = Highcharts.each;
+      var exist = false;
+      each(chart.annotations.allItems, function(item, i) {
+          if(item.options.title == "stop loss") {
+              exist=true;
+          }
+      });
+      if(!exist){
+        drawAnnotation(chart,"stop loss");
+      }
+    });
+
+    //update value line for stop loss
+    $("#stop_loss_inp").on("change",function(){
+      var chart = $('#container').highcharts(),
+      each = Highcharts.each;
+      var val = parseFloat($(this).val());
       
-        var chart = new Highcharts.stockChart({
+      each(chart.annotations.allItems, function(item, i) {
+          if(item.options.title == "stop loss") {
+              item.update({
+                yValue:val,
+                yValueEnd:val
+              });
+          }
+      });
+    });
+
+    //line for take Profit
+    $("#take_profit_inp").click(function(){
+      var chart = $("#container").highcharts();
+      each = Highcharts.each;
+      var exist = false;
+      each(chart.annotations.allItems, function(item, i) {
+          if(item.options.title == "take profit") {
+              exist=true;
+          }
+      });
+      if(!exist){
+        drawAnnotation(chart,"take profit");
+      }
+    });
+
+    //update value line for take profit
+    $("#take_profit_inp").on("change",function(){
+      var chart = $('#container').highcharts(),
+      each = Highcharts.each;
+      var val = parseFloat($(this).val());
+      
+      each(chart.annotations.allItems, function(item, i) {
+          if(item.options.title == "take profit") {
+              item.update({
+                yValue:val,
+                yValueEnd:val
+              });
+          }
+      });
+    });
+
+
+    //funtion to send something
+    $("#btn-enviar").click(function(){
+
+
+      if(confirm("se actualizara")==true){
+        var chart = $("#container").highcharts();
+        //var db = firebase.database();
+        var allAnnotations = chart.annotations.allItems;
+        var option=[];
+        $.each(allAnnotations,function(index,element){
+          var dataOptions={
+            allowDragX: element.options.allowDragX,
+            allowDragY: element.options.allowDragY,
+            anchorX: element.options.anchorX,
+            anchorY: element.options.anchorY,
+            selectionMarker: element.options.selectionMarker,
+            shape: element.options.shape,
+            xAxis: element.options.xAxis,
+            xValue: element.options.xValue,
+            xValueEnd: element.options.xValueEnd,
+            yAxis: element.options.yAxis,
+            yValue: element.options.yValue,
+            yValueEnd: element.options.yValueEnd,
+          }
+
+          option.push(dataOptions);
+        });
+
+        /*db.ref($("#symbol").val().replace(/\//g,'')).remove();
+
+        allAnnotations.forEach(function(element, index, array){
+          db.ref($("#symbol").val().replace(/\//g,'')).child('/').push().set({
+            allowDragX: element.options.allowDragX,
+            allowDragY: element.options.allowDragY,
+            anchorX: element.options.anchorX,
+            anchorY: element.options.anchorY,
+            selectionMarker: element.options.selectionMarker,
+            shape: element.options.shape,
+            xAxis: element.options.xAxis,
+            xValue: element.options.xValue,
+            xValueEnd: element.options.xValueEnd,
+            yAxis: element.options.yAxis,
+            yValue: element.options.yValue,
+            yValueEnd: element.options.yValueEnd,
+          });
+        });*/
+
+        //create json
+        var json={
+          "symbol": $("#symbol").val(),
+          "market": $("#market").val(),
+          "system": "-KUrkIm_pxcACN_ONuWd",
+          "sl": parseFloat($("#stop_loss_inp").val()),
+          "tp": parseFloat($("#take_profit_inp").val()),
+          "price": parseFloat($("#price").val()),
+          "order_type": $("#order_type").val(),
+          "provider": $("#market").val(),                        
+          "notes":{
+            "annotations": {option},
+            "description": $("#description").val(),
+            "strategy": $("#strategy").val(),
+            "characteristic": parseFloat($("#characteristic").val()),
+            "chart":{            
+              "from": chart.series[0].processedXData[0]/1000,
+              "till": chart.series[0].processedXData[59]/1000,
+              "period": parseInt($("#period").val())
+            }
+          }        
+        }
+
+        var token ="eyJhbGciOiJSUzI1NiIsImtpZCI6IjgzNDY2Yzc2NTg1NDY2NzUxNzA1NTUwMzRjMzVhYTEwOGJhODRjN2IifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmxhcmVmeC0xMWYxYiIsImF1ZCI6ImZsYXJlZngtMTFmMWIiLCJhdXRoX3RpbWUiOjE0ODMzOTk3NDIsInVzZXJfaWQiOiJMRnV0eDltUWJUVHlSbzRBOVJlNUk0Y0tONHEyIiwic3ViIjoiTEZ1dHg5bVFiVFR5Um80QTlSZTVJNGNLTjRxMiIsImlhdCI6MTQ4MzM5OTc0MywiZXhwIjoxNDgzNDAzMzQzLCJlbWFpbCI6ImRvbmFsZC5tZzkyQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJkb25hbGQubWc5MkBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.N4_eo5EKgYmFu8_Pto3eQXzPA5qErOMjoVy5sVM6L0fmDiLNhUWtMyv_7W1A69zP2xKO3pWOyNycNPOSwGfUl_HuG37yZrFpiZTLiqU_76VP-e9fBSVrJXo7k9S4OvLDNWlIqbe9WmznteXa2Z-cx355jmjZGLbxcBBJTVwhyl_8lvOH5MGRQH3sGhPdsXFa4JyIQUEBVrX3fBJfslRZ7czWMPPe4TWwbfKFL5KWj9LSIbx5IGMUeXC04UntT0HMqGNISiIoJpgvNly3leknuCKUAKl4l3IYGDnY4Rw2Bq9xrOs7R6JAQkepvZqeqwZm1uBxF-dyzY8Mi9-ekgVWyw";
+
+        //$.post("http://morning-bayou-76522.herokuapp.com/api/signal/?auth="+token, json, function(returnedData){console.log(returnedData)}).fail(function(e){console.log(e)})
+
+
+        $.ajax({
+          method:'POST',
+          url:"http://morning-bayou-76522.herokuapp.com/api/signal/?auth="+token,
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(json),
+          success:function(){
+            console.log("success");
+          },
+          error:function(e,a,t){
+            console.log(e);
+            console.log(a);
+            console.log(t);
+          }
+        });
+
+      }
+      
+    });
+
+    //change the currency in  the chart
+    $("#symbol").on('changed.bs.select', function(e){
+      newChart($(this).val(),$("#period").val());
+    });
+    //change the period of the chart
+    $("#period").on('changed.bs.select', function(e){
+      newChart($("#symbol").val(), $(this).val());
+    });
+
+    </script>
+
+
+    <script>
+    //getjson
+    function newChart(symbol, period) {
+      var now = new Date();
+      var month = new Date();
+
+      month.setTime(now.getTime()- 1000*60*60*24*30);
+      now = Math.round(now.getTime()/1000);
+      month = Math.round(month.getTime()/1000);
+
+
+      var url = "http://www.tradingpal.com/api/instruments/"+symbol+"/chart?serverID=3&till="+now+"&period="+period+"&from="+month;
+      console.log(url);
+
+      $.ajax({
+        type:'GET',
+        url:url,
+        success:function(data){
+
+          data = Object.keys(data).map(function(key, index) {
+                    return [data[key].time*1000,data[key].open,data[key].high,data[key].low,data[key].close];
+                  });
+
+          var options={
             accessibility: {
                 keyboardNavigation:{
                     enabled: false
@@ -62,8 +448,10 @@
             chart: {
                 renderTo: 'container',
                 backgroundColor: '#f4f4f4',
-                events: {
-                    load: chartLoad,
+                events:{
+                  load:function(){
+                    this.xAxis[0].setExtremes(data[data.length-60][0],data[data.length-1][0]);
+                  },
                 },
                 resetZoomButton: {
                     theme: {
@@ -73,18 +461,44 @@
             },
             annotationsOptions: {
               enabledButtons:true,
-              buttons:{
-                annotation:{
-                  events:{
-                    mouseup:{
-
-                    }
-                  }
+              buttons:{}
+            },
+            exporting: { 
+              buttons: {
+                customButton: {
+                  text: 'Save annotations',
+                  onclick: function () {
+                    if(confirm("se actualizara")==true){
+                      var db = firebase.database();
+                      var allAnnotations = chart.annotations.allItems;
+                      db.ref("annotations").remove();
+                      allAnnotations.forEach(function(element, index, array){
+                        db.ref("annotations").child('/').push().set({
+                          allowDragX: element.options.allowDragX,
+                          allowDragY: element.options.allowDragY,
+                          anchorX: element.options.anchorX,
+                          anchorY: element.options.anchorY,
+                          selectionMarker: element.options.selectionMarker,
+                          shape: element.options.shape,
+                          xAxis: element.options.xAxis,
+                          xValue: element.options.xValue,
+                          xValueEnd: element.options.xValueEnd,
+                          yAxis: element.options.yAxis,
+                          yValue: element.options.yValue,
+                          yValueEnd: element.options.yValueEnd,
+                        });
+                      });
+                    }  
+                  },
+                  x: -62
                 }
               }
             },
             xAxis:{
-
+              type:'datetime',
+              labels: {
+                format:'{value:%e %b}<br>{value:%k:%M}',
+              }
             },
             yAxis: {
                 opposite: false,
@@ -98,14 +512,21 @@
             legend: {
                 enabled: false
             },
-            exporting: {
-                enabled: false
+            navigation: {
+                buttonOptions: {
+                    enabled: true
+                }
             },
             tooltip: {
                 enabled: false
             },
             navigator: {
-                enabled: false
+                adaptToUpdatedData: true,
+                enabled: true,
+                series:{
+                  color:'#f7676c',
+                  lineWidth: 1
+                }
             },
             rangeSelector: {
                 selected: 1
@@ -117,53 +538,29 @@
                 type: 'candlestick',
                 name: 'AAPL Stock Price',
                 data: data,
-                dataGrouping: {
-                    units: [
-                        [
-                            'week', // unit name
-                            [1] // allowed multiples
-                        ], [
-                            'month',
-                            [1, 2, 3, 4, 6]
-                        ]
-                    ]
+                dataGrouping:{
+                  enabled: true
                 }
             }]
-        });
-        function chartLoad(){
-            var chart = this;
-            function del(e,annotation){
-                console.log(e);
-                console.log(annotation);
-                console.log(chart.selectedAnnotation);
-                console.log(JSON.stringify(chart.options.annotations));
-            }
-            var annotations = chart.annotations;
-            console.log(annotations);
-            Highcharts.addEvent(container, 'dblclick', del);
-        }
+          };
 
-        $(document).ready(function(){
-          var db = firebase.database();
-          if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            $(".highcharts-range-selector-buttons").css("display","none");
-            $(".highcharts-input-group").css("display","none");
-            $(".highcharts-button").css("display","none");
-          }
-          else{
-            db.ref("annotations").on('value',function(snapshot){
-              snapshot.forEach(function(val){
-                $("#container").highcharts().addAnnotation(val.val());
-              });
+          var chart = new Highcharts.stockChart(options);    
+
+          $(".highcharts-input-group").css("display","none");
+          $(".highcharts-contextbutton").css("display","none");
+          $(".highcharts-range-selector-buttons").css("display","none");
+
+
+          /*var db = firebase.database();
+
+          db.ref($("#symbol").val().replace(/\//g,'')).once("value",function(snapshot){
+            snapshot.forEach(function(val){
+              $("#container").highcharts().addAnnotation(val.val());
             });
-          }
-        });
-    });
-});
-  </script>
-</head>
-  <body>
-    <div id="container">
-    </div>
+          });*/
+        }
+      })
+    }
+    </script>
   </body>
 </html>

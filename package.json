@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/Infinity0106/react-native-chart-view/issues"
   },
-  "homepage": "https://github.com/Infinity0106/react-native-chart-view#readme"
+  "homepage": "https://github.com/Infinity0106/react-native-chart-view#readme",
+  "dependencies": {
+    "firebase": "^3.6.3"
+  }
 }
