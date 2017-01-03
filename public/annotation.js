@@ -213,8 +213,8 @@
 			yAxis: 0,
 			shape: {
 				params: {
-					stroke: '#7a7a7a',
-					fill: '#7a7a7a',
+					stroke: '#000000',
+					fill: 'rgba(0,0,0,0)',
 					'stroke-width': 2
 				}
 			},
@@ -260,16 +260,16 @@
 			params = [{
 				r: 0,
 				fill: 'rgba(255,0,0,0.4)',
-				stroke: '#7a7a7a'
+				stroke: 'black'
 			}, {
 				d: ['M', 0, 0, 'L', 10, 10],
-				fill: '#7a7a7a',
-				stroke: '#7a7a7a'
+				fill: 'rgba(255,0,0,0.4)',
+				stroke: 'black'
 			}, {
 				width: 10,
 				height: 10,
 				fill: 'rgba(255,0,0,0.4)',
-				stroke: '#7a7a7a'
+				stroke: 'black'
 			}],
 			steps = [utils.getRadius, utils.getPath, utils.getRect, utils.getText],
 			stops = [utils.getRadiusAndUpdate, utils.getPathAndUpdate, utils.getRectAndUpdate, utils.showInput];

@@ -9,178 +9,81 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
-  ActivityIndicator
+  View
 } from 'react-native';
 import ChartView from './App/index.js';
-import * as firebase from 'firebase';
-//remove
-const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    storageBucket: "",
-    messagingSenderId: ""
-};
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class chartWebView extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      loading: false,
-      conf:{}
-    };
-  }
-  componentWillMount(){
-    var optAnnotations=[];
-    var dataRef = firebaseApp.database().ref("annotations");
-    dataRef.on('value', (snap)=>{
-      snap.forEach((child)=>{
-        optAnnotations.push(child.val());
-      });
-      this.setState({loading: true});
-    });
-
-    this.setState({conf:{
-			"symbol":"AUDCAD",
-			"market":"Forex",
-			"system":"-KUrkIm_pxcACN_ONuWd",
-			"sl":0.96782,
-			"tp":0.96957,
-			"price":0.968,
-			"order_type":"buy",
-			"provider":"Forex",
-			"notes":{
-				"annotations":[{
-					"allowDragX":false,
-					"allowDragY":true,
-					"anchorX":"left",
-					"anchorY":"top",
-					"selectionMarker":{
-						"stroke-width":1,
-						"stroke":"black",
-						"fill":"transparent",
-						"dashstyle":"ShortDash",
-						"shape-rendering":"crispEdges"
-					},
-					"shape":{
-						"params":{
-							"stroke":"#7F0000",
-							"fill":"transparent",
-							"stroke-width":2,
-							"stroke-dasharray":20,
-							"d":["M",0,0,"L",316210.6666666666,0]
-						},
-						"type":"path"
-					},
-					"xAxis":0,
-					"xValue":1482366420000,
-					"xValueEnd":1483115340000,
-					"yAxis":0,
-					"yValue":0.96782,
-					"yValueEnd":0.96782
-				},{
-					"allowDragX":false,
-					"allowDragY":true,
-					"anchorX":"left",
-					"anchorY":"top",
-					"selectionMarker":{
-						"stroke-width":1,
-						"stroke":"black",
-						"fill":"transparent",
-						"dashstyle":"ShortDash",
-						"shape-rendering":"crispEdges"
-					},
-					"shape":{
-						"params":{
-							"stroke":"#66A366",
-							"fill":"transparent",
-							"stroke-width":2,
-							"stroke-dasharray":20,
-							"d":["M",0,0,"L",316210.6666666666,0]
-						},
-						"type":"path"
-					},
-					"xAxis":0,
-					"xValue":1482366420000,
-					"xValueEnd":1483115340000,
-					"yAxis":0,
-					"yValue":0.96957,
-					"yValueEnd":0.96957
-				},{
-					"allowDragX":true,
-					"allowDragY":true,
-					"anchorX":"left",
-					"anchorY":"top",
-					"selectionMarker":{
-						"stroke-width":1,
-						"stroke":"black",
-						"fill":"transparent",
-						"dashstyle":"ShortDash",
-						"shape-rendering":"crispEdges"
-					},
-					"shape":{
-						"params":{
-							"stroke":"#7a7a7a",
-							"fill":"#7a7a7a",
-							"stroke-width":2,
-							"d":["M",0,0,"L",378.99999996202246,140.0000000000005]
-						},
-						"type":"path"
-					},
-					"xAxis":0,
-					"xValue":1483113148421.0527,
-					"xValueEnd":1483114046052.6316,
-					"yAxis":0,"yValue":0.9692372093023256,
-					"yValueEnd":0.9685046511627907
-				},{
-					"allowDragX":true,
-					"allowDragY":true,
-					"anchorX":"left",
-					"anchorY":"top",
-					"selectionMarker":{
-						"stroke-width":1,
-						"stroke":"black",
-						"fill":"transparent",
-						"dashstyle":"ShortDash",
-						"shape-rendering":"crispEdges"
-					},
-					"shape":{
-						"params":{
-							"stroke":"#7a7a7a"
-							,"fill":"#7a7a7a",
-							"stroke-width":2,
-							"d":["M",0,0,"L",400.9999999728733,104.00000000000156]
-						},
-						"type":"path"
-					},
-					"xAxis":0,
-					"xValue":1483113060789.4736,
-					"xValueEnd":1483114010526.3157,
-					"yAxis":0,"yValue":0.9687087209302325,
-					"yValueEnd":0.9681645348837209
-				}],
-				"description":"hEJFlkwajfre",
-				"strategy":"Análisis técnico",
-				"characteristic":70,
-				"chart":{
-					"from":1483111800,
-					"till":1483115340,
-					"period":1
-				}
-			}
-		}});
-  }
-  
   render() {
-    if(this.state.loading){
-      return (
-        <ChartView style={{flex:1}} config={this.state.conf}></ChartView>
-      );
-    }
+    var Highcharts='Highcharts';
+    var conf={
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+                        setInterval(function () {
+                            var x = (new Date()).getTime(), // current time
+                                y = Math.random();
+                            series.addPoint([x, y], true, true);
+                        }, 1000);
+                    }
+                }
+            },
+            title: {
+                text: 'Live random data'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Random data',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            }]
+        };
     return (
-      <ActivityIndicator/>
+      <ChartView style={{flex:1}}></ChartView>
     );
   }
 }
