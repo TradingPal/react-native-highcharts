@@ -159,6 +159,7 @@ class ChartView extends Component {
                     style={styles.full}
                     source={{ html: concatHTML, baseUrl:"/web"}}
                     javaScriptEnabled={true}
+		    domStorageEnable={true}
                 />
             </View>
         );
