@@ -12,10 +12,15 @@ import {
 const win = Dimensions.get('window');
 const Highcharts='Highcharts';
 const data='data';
+<<<<<<< HEAD
+=======
+class ChartView extends Component {
+>>>>>>> ce0f8032a51264d3b48b7133fa90aa0ef0651e89
 
 class ChartView extends Component {
 
     static defaultProps = {
+<<<<<<< HEAD
         config: {
             accessibility: {
                 keyboardNavigation:{
@@ -40,15 +45,50 @@ class ChartView extends Component {
             annotations: [{"xAxis":0,"yAxis":0,"shape":{"params":{"stroke":"black","fill":"rgba(255,0,0,0.4)","stroke-width":2,"d":["M",0,0,"L",420.46874999997567,249.9999999999999]},"type":"path"},"events":{},"selectionMarker":{"stroke-width":1,"stroke":"black","fill":"transparent","dashstyle":"ShortDash","shape-rendering":"crispEdges"},"anchorX":"left","anchorY":"top","xValue":1477428629126.2136,"yValue":118.66913123844732,"allowDragX":true,"allowDragY":true,"xValueEnd":1479201087378.6409,"yValueEnd":109.42698706099816},{"xAxis":0,"yAxis":0,"shape":{"params":{"stroke":"black","fill":"rgba(255,0,0,0.4)","stroke-width":2,"d":["M",0,0,"L",409.29687500001637,241.99999999999994]},"type":"path"},"events":{},"selectionMarker":{"stroke-width":1,"stroke":"black","fill":"transparent","dashstyle":"ShortDash","shape-rendering":"crispEdges"},"anchorX":"left","anchorY":"top","xValue":1477471036893.2039,"yValue":112.86506469500924,"allowDragX":true,"allowDragY":true,"xValueEnd":1479210174757.2815,"yValueEnd":103.91866913123845}],
             xAxis:{
 
-            },
-            yAxis: {
-                opposite: false,
+=======
+       
+	  config:{
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE 
+                marginRight: 10,
+                events: {
+                    load: function () {
+ 
+                        // set up the updating of the chart each second 
+                        var series = this.series[0];
+                        setInterval(function () {
+                            var x = (new Date()).getTime(), // current time 
+                                y = Math.random();
+                            series.addPoint([x, y], true, true);
+                        }, 1000);
+                    }
+                }
             },
             title: {
-                text: '',
+                text: 'Live random data'
             },
-            credits: {
-                enabled: false
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+>>>>>>> ce0f8032a51264d3b48b7133fa90aa0ef0651e89
+            },
+            yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
             },
             legend: {
                 enabled: false
@@ -56,6 +96,7 @@ class ChartView extends Component {
             exporting: {
                 enabled: false
             },
+<<<<<<< HEAD
             tooltip: {
                 enabled: false
             },
@@ -83,6 +124,24 @@ class ChartView extends Component {
                         ]
                     ]
                 }
+=======
+            series: [{
+                name: 'Random data',
+                data: (function () {
+                    // generate an array of random data 
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+ 
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+>>>>>>> ce0f8032a51264d3b48b7133fa90aa0ef0651e89
             }]
         }
     };
@@ -91,6 +150,7 @@ class ChartView extends Component {
         super(props);
         this.state={
             init:`<html>
+<<<<<<< HEAD
                     <style media="screen" type="text/css">
                     @import 'https://code.highcharts.com/css/highcharts.css';
 
@@ -1266,10 +1326,18 @@ class ChartView extends Component {
                         <script>
                         $(function () {
                             $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?a=e&filename=aapl-ohlc.json&callback=?', function (data) {
+=======
+                    <head>
+                        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+                        <script src="http://code.highcharts.com/stock/highstock.js"></script>
+                        <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+						
+                        <script>
+                        $(function () {
+>>>>>>> ce0f8032a51264d3b48b7133fa90aa0ef0651e89
                                 Highcharts.stockChart('container', `,
             end:`               );
                             });
-                        });
                         </script>
                     </head>
                     <body>
@@ -1295,6 +1363,7 @@ class ChartView extends Component {
 
     render() {
         var config = JSON.stringify(this.props.config, function (key, value) {//create string of json but if it detects function it uses toString()
+<<<<<<< HEAD
             return (typeof value === 'function') ? value.toString() : value;
         });
 
@@ -1303,6 +1372,33 @@ class ChartView extends Component {
         config = config.replace(/\"function/g, "function");//remove {chart:"function ...} = {chart:function ...}
         config = config.replace(/}\"/g, "}");//remove {chart:function(){}"} = {chart:function(){}} 
         config = config.replace("\"data\"","data");
+=======
+			
+			if(key == "annotations"){
+				//return JSON.stringify(value);
+				//console.log(value);
+				return JSON.stringify(value);
+			}
+			if(typeof value === 'function'){
+				return value.toString();
+			}
+
+			return value;
+            //return (typeof value === 'function') ? value.toString() : value;
+        });
+		
+        config = config.replace(/\\n/g, " "); //remove \n in string = ""
+        config = config.replace(/\"([^(\")"]+)\":/g, "$1: "); //remove {"chart":"chart"} = {chart:"chart"}
+        config = config.replace(/\"function/g, "function"); //remove {chart:"function ...} = {chart:function ...}
+        config = config.replace(/}\"/g, "}"); //remove {chart:function(){}"} = {chart:function(){}} 
+        config = config.replace("\"data\"","data"); //data to show "data" = data 
+        config = config.replace(/stroke-width/g,"\'stroke-width\'"); //used for annotations stroke-width = 'stroke-width'
+	config = config.replace(/stroke-dasharray/g,"\'stroke-dasharray\'"); //used for annotations stroke-dasharray = 'stroke-dasharray'
+	config = config.replace(/shape-rendering/g,"\'shape-rendering\'"); //used for annotations shape-rendering = 'shape-rendering'
+	config = config.replace(/\\/g,''); //replace /allow/: = allow:
+	config = config.replace(/\"\[\{/g,'[{'); //replace annotationc "[{ = [{
+	config = config.replace(/\}\]\"/g,'}]'); //replace }]" = }]
+>>>>>>> ce0f8032a51264d3b48b7133fa90aa0ef0651e89
         var concatHTML = this.state.init + config + this.state.end;
         console.log(concatHTML);
         return (
@@ -1313,6 +1409,7 @@ class ChartView extends Component {
                     /*source={{ html: concatHTML, baseUrl:"/web"}}*/
                     source={{uri: 'https://chart-b1d65.firebaseapp.com/'}}
                     javaScriptEnabled={true}
+		    domStorageEnable={true}
                 />
             </View>
         );
