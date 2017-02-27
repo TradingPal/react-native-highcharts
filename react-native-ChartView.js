@@ -15,6 +15,7 @@ const Highcharts='Highcharts';
 class ChartWeb extends Component {
 
     static defaultProps = {
+        stock: false,
         config: {
             chart: {
                 type: "spline",
@@ -100,7 +101,8 @@ class ChartWeb extends Component {
                     </style>
                     <head>
                         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        ${props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
+                                      : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script>
                         $(function () {
