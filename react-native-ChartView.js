@@ -155,19 +155,19 @@ class ChartWeb extends Component {
 
 var flattenObject = function (obj, str='{') {
     Object.keys(obj).forEach(function(key) {
-        str += `${key}: ${toFlatText(obj[key])}, `
+        str += `${key}: ${flattenText(obj[key])}, `
     })
     return `${str.slice(0, str.length - 2)}}`
 };
 
-var toFlatText = function(item) {
+var flattenText = function(item) {
     var str = ''
     if (typeof item === 'object' && item.length == undefined) {
         str += flattenObject(item)
     } else if (typeof item === 'object' && item.length !== undefined) {
         str += '['
         item.forEach(function(k2) {
-            str += `${toFlatText(k2)}, `
+            str += `${flattenText(k2)}, `
         })
         str = str.slice(0, str.length - 2)
         str += ']'
