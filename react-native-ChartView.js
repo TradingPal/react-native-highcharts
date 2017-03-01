@@ -135,11 +135,8 @@ class ChartWeb extends Component {
             return (typeof value === 'function') ? value.toString() : value;
         });
 
-        config = config.replace(/\\n/g, " ");//remove \n in string = ""
-        config = config.replace(/\"([^(\")"]+)\":/g, "$1: ");//remove {"chart":"chart"} = {chart:"chart"}
-        config = config.replace(/\"function/g, "function");//remove {chart:"function ...} = {chart:function ...}
-        config = config.replace(/}\"/g, "}");//remove {chart:function(){}"} = {chart:function(){}} 
-        var concatHTML = this.state.init + config + this.state.end;
+        var config = JSON.parse(config)
+        var concatHTML = this.state.init + flattenObject(config) + this.state.end;
         return (
             <View style={this.props.style}>
                 <WebView
@@ -152,6 +149,34 @@ class ChartWeb extends Component {
             </View>
         );
     };
+};
+
+var flattenObject = function (obj, str='{') {
+    Object.keys(obj).forEach(function(key) {
+        str += `${key}: ${flattenText(obj[key])}, `
+    })
+    return `${str.slice(0, str.length - 2)}}`
+};
+
+var flattenText = function(item) {
+    var str = ''
+    if (typeof item === 'object' && item.length == undefined) {
+        str += flattenObject(item)
+    } else if (typeof item === 'object' && item.length !== undefined) {
+        str += '['
+        item.forEach(function(k2) {
+            str += `${flattenText(k2)}, `
+        })
+        str = str.slice(0, str.length - 2)
+        str += ']'
+    } else if(typeof item === 'string' && item.slice(0, 8) === 'function') {
+        str += `${item}`
+    } else if(typeof item === 'string') {
+        str += `\"${item.replace(/"/g, '\\"')}\"`
+    } else {
+        str += `${item}`
+    }
+    return str
 };
 
 var styles = StyleSheet.create({
