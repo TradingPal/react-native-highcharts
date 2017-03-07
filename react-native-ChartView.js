@@ -106,7 +106,7 @@ class ChartWeb extends Component {
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script>
                         $(function () {
-                            Highcharts.chart('container', `,
+                            Highcharts.${props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
                         });
                         </script>
