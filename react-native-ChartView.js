@@ -1,91 +1,60 @@
 import React, { Component, PropTypes, } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  WebView,
-  Image,
-  Dimensions
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View,
+    WebView,
+    Image,
+    Dimensions
 } from 'react-native';
 
 const win = Dimensions.get('window');
-const Highcharts='Highcharts';
+
+let init = `<html>
+        <head>
+            <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+            <style media="screen" type="text/css">
+                html, body {
+                    margin: 0,
+                    padding: 0,
+                    width: 100%;
+                    height: 100%;
+                }
+
+                #container {
+                    width:100%;
+                    height:100%;
+                    top:0;
+                    left:0;
+                    right:0;
+                    bottom:0;
+                    position:absolute;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="container"></div>
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+             ${props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
+                                      : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script>
+                var chart = Highcharts.chart('container', `,
+let end =  `    );
+
+                chart.reflow();
+
+                setTimeout(function() {chart.reflow()}, 0);
+                setTimeout(function() {chart.reflow()}, 100);
+            </script>
+        </body>
+    </html>`,
 
 class ChartWeb extends Component {
-
-    static defaultProps = {
-        stock: false,
-        config: {
-            chart: {
-                type: "spline",
-                animation: Highcharts.svg, // don"t animate in old IE
-                marginRight: 10,
-                events: {
-                    load: function () {
-
-                        // set up the updating of the chart each second
-                        var series = this.series[0];
-                        setInterval(function () {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
-                    }
-                }
-            },
-            title: {
-                text: "Live random data"
-            },
-            xAxis: {
-                type: "datetime",
-                tickPixelInterval: 150
-            },
-            yAxis: {
-                title: {
-                    text: "Value"
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: "#808080"
-                }]
-            },
-            tooltip: {
-                formatter: function () {
-                    return "<b>" + this.series.name + "</b><br/>" +
-                        Highcharts.dateFormat("%Y-%m-%d %H:%M:%S", this.x) + "<br/>" +
-                        Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [{
-                name: "Random data",
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                } ())
-            }]
-        }
-    };
-
     constructor(props){
         super(props);
+
         this.state={
             init:`<html>
                     <style media="screen" type="text/css">
@@ -123,32 +92,34 @@ class ChartWeb extends Component {
         }
     }
 
-    re_renderWebView(e) {//re_render is used to resize on orientation of display
+    // used to resize on orientation of display
+    reRenderWebView(e) {
         this.setState({
-            Wlayout: {
-                height: e.nativeEvent.layout.height,
-                width: e.nativeEvent.layout.width,
-            }
+            height: e.nativeEvent.layout.height,
+            width: e.nativeEvent.layout.width,
         })
     }
 
     render() {
-        var config = JSON.stringify(this.props.config, function (key, value) {//create string of json but if it detects function it uses toString()
+        let config = JSON.stringify(this.props.config, function (key, value) {//create string of json but if it detects function it uses toString()
             return (typeof value === 'function') ? value.toString() : value;
         });
 
-        var config = JSON.parse(config)
-        var concatHTML = this.state.init + flattenObject(config) + this.state.end;
+
+        config = JSON.parse(config)
+        let concatHTML = `${init}${flattenObject(config)}${end}`;
+
         return (
-            <View style={this.props.style}>
-                <WebView
-                    onLayout={this.re_renderWebView}
-                    style={styles.full}
-                    source={{ html: concatHTML, baseUrl: 'web/' }}
-                    javaScriptEnabled={true}
-                    domStorageEnable={true}
-                />
-            </View>
+            <WebView
+                onLayout={this.reRenderWebView}
+                style={[styles.full, this.props.style]}
+                source={{ html: concatHTML, baseUrl: 'web/' }}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                scalesPageToFit={false}
+                scrollEnabled={false}
+                automaticallyAdjustContentInsets={false}
+            />
         );
     };
 };
@@ -184,6 +155,7 @@ var flattenText = function(item) {
 var styles = StyleSheet.create({
     full: {
         flex: 1,
+        backgroundColor: "transparent"
     }
 });
 
