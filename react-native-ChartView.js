@@ -54,10 +54,41 @@ let end =  `    );
 class ChartWeb extends Component {
     constructor(props){
         super(props);
-      
-        this.state = {
-            height: win.height,
-            width: win.width,
+
+        this.state={
+            init:`<html>
+                    <style media="screen" type="text/css">
+                    #container {
+                        width:100%;
+                        height:100%;
+                        top:0;
+                        left:0;
+                        right:0;
+                        bottom:0;
+                        position:absolute;
+                    }
+                    </style>
+                    <head>
+                        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+                        ${props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
+                                      : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script>
+                        $(function () {
+                            Highcharts.${props.stock ? 'stockChart' : 'chart'}('container', `,
+            end:`           );
+                        });
+                        </script>
+                    </head>
+                    <body>
+                        <div id="container">
+                        </div>
+                    </body>
+                </html>`,
+            Wlayout:{
+                height:win.height,
+                width:win.width
+            }
         }
     }
 
