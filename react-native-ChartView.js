@@ -162,9 +162,9 @@ var flattenObject = function (obj, str='{') {
 
 var flattenText = function(item) {
     var str = ''
-    if (typeof item === 'object' && item.length == undefined) {
+    if (item && typeof item === 'object' && item.length == undefined) {
         str += flattenObject(item)
-    } else if (typeof item === 'object' && item.length !== undefined) {
+    } else if (item && typeof item === 'object' && item.length !== undefined) {
         str += '['
         item.forEach(function(k2) {
             str += `${flattenText(k2)}, `
