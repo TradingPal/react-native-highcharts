@@ -1,4 +1,4 @@
-#React-Native Highcharts
+# React-Native Highcharts
 
 This is a react-native component for IOS and Android that uses [Highcharts](http://www.highcharts.com) where you send the configuration as a prop and the chart is rendered within a WebView 
 
@@ -89,7 +89,7 @@ render() {
 }
 ```
 
-##Props
+## Props
 | Prop          | Required      | Description  |
 | ------------- |:-------------:| ------------:|
 | config        | true          | Highcharts configuration [See the docs.>>](http://www.highcharts.com/docs/getting-started/your-first-chart)  |
