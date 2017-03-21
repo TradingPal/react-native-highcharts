@@ -48,3 +48,5 @@ __tests__/
 android/
 ios/
 node_modules/
+.firebaserc
+firebase.json
