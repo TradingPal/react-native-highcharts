@@ -10,47 +10,6 @@ import {
 } from 'react-native';
 
 const win = Dimensions.get('window');
-
-let init = `<html>
-        <head>
-            <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-            <style media="screen" type="text/css">
-                html, body {
-                    margin: 0,
-                    padding: 0,
-                    width: 100%;
-                    height: 100%;
-                }
-
-                #container {
-                    width:100%;
-                    height:100%;
-                    top:0;
-                    left:0;
-                    right:0;
-                    bottom:0;
-                    position:absolute;
-                }
-            </style>
-        </head>
-        <body>
-            <div id="container"></div>
-            <script src="https://code.highcharts.com/highcharts.js"></script>
-             ${props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
-                                      : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
-            <script src="https://code.highcharts.com/modules/exporting.js"></script>
-            <script>
-                var chart = Highcharts.chart('container', `,
-let end =  `    );
-
-                chart.reflow();
-
-                setTimeout(function() {chart.reflow()}, 0);
-                setTimeout(function() {chart.reflow()}, 100);
-            </script>
-        </body>
-    </html>`,
-
 class ChartWeb extends Component {
     constructor(props){
         super(props);
@@ -70,12 +29,12 @@ class ChartWeb extends Component {
                     </style>
                     <head>
                         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-                        ${props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
+                        ${this.props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
                                       : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script>
                         $(function () {
-                            Highcharts.${props.stock ? 'stockChart' : 'chart'}('container', `,
+                            Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
                         });
                         </script>
@@ -107,19 +66,21 @@ class ChartWeb extends Component {
 
 
         config = JSON.parse(config)
-        let concatHTML = `${init}${flattenObject(config)}${end}`;
+        let concatHTML = `${this.state.init}${flattenObject(config)}${this.state.end}`;
 
         return (
-            <WebView
-                onLayout={this.reRenderWebView}
-                style={[styles.full, this.props.style]}
-                source={{ html: concatHTML, baseUrl: 'web/' }}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                scalesPageToFit={false}
-                scrollEnabled={false}
-                automaticallyAdjustContentInsets={false}
-            />
+          <View style={this.props.style}>
+              <WebView
+                  onLayout={this.reRenderWebView}
+                  style={styles.full}
+                  source={{ html: concatHTML, baseUrl: 'web/' }}
+                  javaScriptEnabled={true}
+                  domStorageEnabled={true}
+                  scalesPageToFit={true}
+                  scrollEnabled={false}
+                  automaticallyAdjustContentInsets={true}
+              />
+          </View>
         );
     };
 };
@@ -154,8 +115,8 @@ var flattenText = function(item) {
 
 var styles = StyleSheet.create({
     full: {
-        flex: 1,
-        backgroundColor: "transparent"
+        flex:1,
+        backgroundColor:'transparent'
     }
 });
 
