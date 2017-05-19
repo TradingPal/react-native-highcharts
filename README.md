@@ -96,6 +96,13 @@ render() {
 | stock     | false      |   Default false; use Highstock |
 | style | false      |   Style object to be passed onto the WebView |
 
+## NOTE
+if not rendering in real device add this two props to the component
+```javascript
+javaScriptEnabled={true}
+domStorageEnabled={true}
+```
+
 ## Stuff used to make this:
 
  * [Highcharts](http://www.highcharts.com/) for making the chart
