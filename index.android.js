@@ -9,40 +9,18 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
-  ActivityIndicator
+  View
 } from 'react-native';
 import ChartView from './App/index.js';
-import * as firebase from 'firebase';
-//remove
-const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    storageBucket: "",
-    messagingSenderId: ""
-};
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class chartWebView extends Component {
+
   constructor(props){
     super(props);
-    this.state={
-      loading: false,
-      conf:{}
-    };
   }
-  componentWillMount(){
-    var optAnnotations=[];
-    var dataRef = firebaseApp.database().ref("annotations");
-    dataRef.on('value', (snap)=>{
-      snap.forEach((child)=>{
-        optAnnotations.push(child.val());
-      });
-      this.setState({loading: true});
-    });
-
-    this.setState({conf:{
+    render() {
+    var Highcharts='Highcharts';
+    var conf={
             chart: {
                 type: 'spline',
                 animation: Highcharts.svg, // don't animate in old IE
@@ -107,17 +85,9 @@ export default class chartWebView extends Component {
                     return data;
                 }())
             }]
-        }});
-  }
-  
-  render() {
-    if(this.state.loading){
-      return (
-        <ChartView style={{flex:1}} config={this.state.conf}></ChartView>
-      );
-    }
+        };
     return (
-      <ActivityIndicator/>
+      <ChartView style={{flex:1}} config={conf} stock={false}></ChartView>
     );
   }
 }
