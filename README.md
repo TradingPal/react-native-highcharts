@@ -94,6 +94,7 @@ render() {
 | ------------- |:-------------:| ------------:|
 | config        | true          | Highcharts configuration [See the docs.>>](http://www.highcharts.com/docs/getting-started/your-first-chart)  |
 | stock     | false      |   Default false; use Highstock |
+| more     | false      |   Default false; use Highstock-more |
 | style | false      |   Style object to be passed onto the WebView |
 
 ## NOTE
