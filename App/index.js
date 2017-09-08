@@ -16,7 +16,7 @@ class ChartWeb extends Component {
 
         this.state={
             init:`<html>
-                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
                     <style media="screen" type="text/css">
                     #container {
                         width:100%;
