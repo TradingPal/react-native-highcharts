@@ -26,6 +26,8 @@ class ChartWeb extends Component {
                         right:0;
                         bottom:0;
                         position:absolute;
+                        user-select: none;
+                        -webkit-user-select: none;
                     }
                     </style>
                     <head>
