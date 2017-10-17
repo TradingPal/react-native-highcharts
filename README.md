@@ -107,7 +107,7 @@ render() {
 | stock     | false      |   Default false; use Highstock |
 | more     | false      |   Default false; use Highstock-more |
 | style | false      |   Style object to be passed onto the WebView |
-| options | false      |   Default empty; pass global and lag options |
+| options | false      |   Pass global and lang options from Highcharts |
 
 ## NOTE
 if not rendering in real device add this two props to the component
