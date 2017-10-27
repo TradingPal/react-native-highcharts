@@ -39,6 +39,7 @@ class ChartWeb extends Component {
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script>
                         $(function () {
+                            Highcharts.setOptions(${JSON.stringify(this.props.options)});
                             Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
                         });
