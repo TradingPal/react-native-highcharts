@@ -109,6 +109,10 @@ render() {
 | heatMap   | false | Default false; use HeatMap |
 | style | false      |   Style object to be passed onto the WebView |
 | options | false      |   Pass global and lang options from Highcharts |
+| guage | false      |   Import gauge library from highcharts |
+
+
+props added to WebView
 
 ## NOTE
 if not rendering in real device add this two props to the component
