@@ -110,6 +110,8 @@ render() {
 | style | false      |   Style object to be passed onto the WebView |
 | options | false      |   Pass global and lang options from Highcharts |
 | guage | false      |   Import gauge library from highcharts |
+| scalesPageToFit | false      |   Default true; If false it does not allow the page to scales the WebView |
+| automaticallyAdjustContentInsets | false      |   Default true; If false it does not allow the chart to adjust its size automatically. |
 
 
 props added to WebView
