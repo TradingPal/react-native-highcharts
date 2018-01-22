@@ -11,9 +11,9 @@ import {
   Text,
   View
 } from 'react-native';
-import ChartView from './App/index.js';
+import ChartWeb from './App/index.js';
 
-export default class chartWebView extends Component {
+export default class ChartWebView extends Component {
 
   constructor(props){
     super(props);
@@ -87,8 +87,8 @@ export default class chartWebView extends Component {
             }]
         };
     return (
-      <ChartView style={{flex:1}} config={conf} stock={false}></ChartView>
+      <ChartWeb style={{flex:1}} config={conf} stock={false}></ChartWeb>
     );
   }
 }
-AppRegistry.registerComponent('chartWebView', () => chartWebView);
+AppRegistry.registerComponent('ChartWebView', () => ChartWebView);
