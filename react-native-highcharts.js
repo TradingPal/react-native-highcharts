@@ -31,7 +31,6 @@ class ChartWeb extends Component {
                     }
                     </style>
                     <head>
-                        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
                         ${this.props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
                                       : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
                         ${this.props.more ? '<script src="https://code.highcharts.com/highcharts-more.js"></script>'
@@ -40,10 +39,9 @@ class ChartWeb extends Component {
                                       : ''}
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script>
-                        $(function () {
+                        document.addEventListener("DOMContentLoaded", function(event) {
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
-                            Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
-            end:`           );
+                            Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `, end: `);
                         });
                         </script>
                     </head>
