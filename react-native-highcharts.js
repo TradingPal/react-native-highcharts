@@ -39,9 +39,43 @@ class ChartWeb extends Component {
                         ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
                                       : ''}
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>
                         <script>
                         $(function () {
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
+                            moment.locale('${this.props.locale}');
+                            Highcharts.dateFormats = {
+                                a: function(ts) {
+                                  return moment(ts).format('dddd');
+                                },
+                                A: function(ts) {
+                                  return moment(ts).format('dddd');
+                                },
+                                d: function(ts) {
+                                  return moment(ts).format('DD');
+                                },
+                                e: function(ts) {
+                                  return moment(ts).format('D');
+                                },
+                                b: function(ts) {
+                                  return moment(ts).format('MMMM');
+                                },
+                                B: function(ts) {
+                                  return moment(ts).format('MMMM');
+                                },
+                                m: function(ts) {
+                                  return moment(ts).format('MM');
+                                },
+                                y: function(ts) {
+                                  return moment(ts).format('YY');
+                                },
+                                Y: function(ts) {
+                                  return moment(ts).format('YYYY');
+                                },
+                                W: function(ts) {
+                                  return moment(ts).format('ww');
+                                },
+                            };
                             Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
                         });
