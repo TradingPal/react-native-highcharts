@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/TradingPal/react-native-highcharts/issues"
   },
+  "dependencies": {
+    "react-native-webview": "^7.4.1",
+  }
   "homepage": "https://github.com/TradingPal/react-native-highcharts#readme"
 }
