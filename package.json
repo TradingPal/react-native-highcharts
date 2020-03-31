@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/TradingPal/react-native-highcharts#readme",
   "dependencies": {
-    "react-native-webview": "^9.0.2"
+    "react-native-webview": "^9.0.2",
+    "react-native-highcharts": "todorPA/react-native-highcharts#master"
   }
 }
