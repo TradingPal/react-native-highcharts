@@ -4,10 +4,10 @@ import {
     StyleSheet,
     Text,
     View,
-    WebView,
     Image,
     Dimensions
 } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 const win = Dimensions.get('window');
 class ChartWeb extends Component {
@@ -39,6 +39,7 @@ class ChartWeb extends Component {
                         ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
                                       : ''}
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
                         <script>
                         $(function () {
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
@@ -79,7 +80,7 @@ class ChartWeb extends Component {
         return (
           <View style={this.props.style}>
               <WebView
-                  onLayout={this.reRenderWebView}
+                  onLayout={this.reRenderWebView.bind(this)}
                   style={styles.full}
                   source={{ html: concatHTML, baseUrl: 'web/' }}
                   javaScriptEnabled={true}

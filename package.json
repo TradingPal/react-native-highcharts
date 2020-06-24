@@ -1,6 +1,6 @@
 {
   "name": "react-native-highcharts",
-  "version": "1.1",
+  "version": "1.1.0",
   "description":
     "JavaScript implementation of a view container that can flip between its front and back, where the back has a console.log and the front is your aplication.",
   "main": "react-native-highcharts.js",
