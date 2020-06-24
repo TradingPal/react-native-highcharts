@@ -39,6 +39,7 @@ class ChartWeb extends Component {
                         ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
                                       : ''}
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
                         <script>
                         $(function () {
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
